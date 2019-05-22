@@ -3,7 +3,7 @@
 
 
 1. default logs writing location. 
-  tmp\\CxAPIDataLog.json
+ # tmp\\CxAPIDataLog.json
 
 # This is an <h1> tag
 ## This is an <h2> tag
