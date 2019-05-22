@@ -1,7 +1,9 @@
 
 # Usage example and Details <h1>
-default logs writing location. 
-tmp\\CxAPIDataLog.json
+
+
+1. default logs writing location. 
+  tmp\\CxAPIDataLog.json
 
 # This is an <h1> tag
 ## This is an <h2> tag
