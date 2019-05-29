@@ -13,7 +13,7 @@ import (
 )
 
 //ScanSettings
-func ScanSettings(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken string) (rp *http.Response) {
+func ScanSettings(sc mtypes.ConnectStruct, au mtypes.Authparams, presetid, bodyortoken string) (rp *http.Response) {
 
 	//Create Transport based on proxy configuration
 	transport := cr.CreateTransport(sc.Proxyserver)
@@ -31,7 +31,7 @@ func ScanSettings(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken str
 
 	//generating the HTTP POST request
 
-	payload := "ProjectId=" + sc.ProjectID + "&PresetId=1&engineConfigurationId=1"
+	payload := "ProjectId=" + sc.ProjectID + "&PresetId=" + presetid + "&engineConfigurationId=1"
 
 	// payload := strings.NewReader("ProjectId=24&PresetId=1&engineConfigurationId=1")
 
@@ -42,7 +42,7 @@ func ScanSettings(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken str
 	req.Header.Add("cxOrigin", "automated scan test project")
 	req.Header.Add("Accept", "application/json;v=1.0")
 	req.Header.Add("projectId", sc.ProjectID)
-	req.Header.Add("presetI", "1")
+	req.Header.Add("presetI", presetid)
 	req.Header.Add("isPublic", "true")
 	req.Header.Add("engineConfigurationId", "1")
 

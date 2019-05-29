@@ -53,9 +53,17 @@ func main() {
 	//	var svar string
 	//	flag.StringVar(&svar, "svar", "bar", "a string var")
 
-	*destinationserver = "https://destination.checkmarx.net"
+	// *destinationserver = "https://destination.checkmarx.net"
+	fmt.Println("*destinationserver ", *destinationserver)
+	fmt.Println("fullProxyURL:", *fullProxyURL)
+	fmt.Println("user:", *user)
+	fmt.Println("pass:", *pass)
+	fmt.Println("oauthtoken:", *oauthtoken)
+	fmt.Println("action:", *action)
+	fmt.Println("filelocation:", *filelocation)
+	fmt.Println("projectID:", *projectID)
+	fmt.Println("cxpreset:", *cxpreset)
 
-	*fullProxyURL = "http://localhost:8090"
 	*fullProxyURL = "http://localhost:8090"
 
 	// *user = "testuser"
@@ -100,7 +108,7 @@ func main() {
 		fmt.Println("Start command execution of :", *action)
 		fmt.Println(responseConnectStruct.Action.GetAction(*action))
 		//define scan settings
-		rp := st.ScanSettings(responseConnectStruct, responseAuthparams, *oauthtoken)
+		rp := st.ScanSettings(responseConnectStruct, responseAuthparams, *cxpreset, *oauthtoken)
 		if rp.StatusCode != 200 {
 			fmt.Println("Could not set scan settings")
 		}
