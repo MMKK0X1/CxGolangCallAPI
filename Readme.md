@@ -10,7 +10,7 @@ Next I have looked at  CxConsole (CxSAST CLI). This tool requires JVM to be inst
 Besides, most of the machines are short lived, docker builders, so the solution should be portable and as small as possible, especially when docker scratch was used as base. 
 
 
-Therefore, after taking into an account the above, I went home and end-up to build a client. :boom: 
+Therefore, after taking into an account the above, I went home and end-up to building the client to solve all those issues. :boom: 
 
 **Cross-platform**  
 The client is build on golang and can be compiled . - :+1:    				
