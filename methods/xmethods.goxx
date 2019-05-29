@@ -1,0 +1,108 @@
+package xmethods
+
+import (
+	"crypto/tls"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
+	"reflect"
+	"strings"
+)
+
+type Authparams struct {
+	username      string
+	password      string
+	grant_type    string
+	scope         string // An unexported field is not encoded.
+	client_id     string
+	client_secret string
+}
+
+// Authenticaiton string
+func AuthDataStruct(us, pass string) string {
+
+	authdata := Authparams{}
+	authdata.username = us
+	authdata.password = pass
+	authdata.grant_type = "password"                                //hardcoded
+	authdata.scope = "sast_rest_api"                                //hardcoded
+	authdata.client_id = "resource_owner_client"                    //hardcoded
+	authdata.client_secret = "014DF517-39D1-4453-B7B3-9930C563627C" //hardcoded
+	v := reflect.ValueOf(authdata)
+	for i := 0; i < v.NumField(); i++ {
+
+	}
+
+	StringBuld := "username=" + url.QueryEscape(authdata.username) + "&" + "password=" + url.QueryEscape(authdata.password) + "&" + "grant_type=" + authdata.grant_type + "&" + "scope=" + authdata.scope + "&" + "client_id=" + authdata.client_id + "&" + "client_secret=" + authdata.client_secret
+	//fmt.Println("StringBuld:   ", StringBuld)
+	//fmt.Println(authdata)
+	// fmt.Println(values.NumField())
+	// data := make(map[int]Authparams)
+	// data[1] = Authparams{username: "username", password: "password"}
+	// data[2] = Authparams{username: "username2", password: "password2"}
+
+	// fmt.Printf("%+v\n", authdata)
+	return StringBuld
+
+}
+
+func CreatePostRequest(destinationserver, getTokenURI, proxyserver, username, password string) []byte {
+	//Create Transport based on proxy configuration
+	transport := createTransport(proxyserver)
+
+	//Parse Url
+	urlStr := destinationserver + "/" + getTokenURI
+	url, err := url.Parse(urlStr)
+	fmt.Println("url ", url.String())
+	if err != nil {
+		log.Println(err)
+	}
+	//Create Client
+	client := &http.Client{
+		Transport: transport,
+	}
+
+	//generating the HTTP POST request
+	request, err := http.NewRequest("POST", url.String(), strings.NewReader(AuthDataStruct(username, password)))
+	if err != nil {
+		log.Println(err)
+	}
+	//calling the URL
+	response, err := client.Do(request)
+	if err != nil {
+		log.Println(err)
+	}
+	//getting the response
+	//fmt.Printf("%T", response.Body)
+	data, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Println(err)
+	}
+	return data
+}
+
+func createTransport(proxyserver string) *http.Transport {
+	transport := &http.Transport{}
+	if proxyserver == "" {
+		transport = &http.Transport{
+			//!!!disable certificate CHECK!!!!
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		}
+	} else {
+		proxyStr := proxyserver
+		proxyURL, err := url.Parse(proxyStr)
+		transport = &http.Transport{
+			//!!!disable certificate CHECK!!!!
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			Proxy:           http.ProxyURL(proxyURL),
+		}
+
+		if err != nil {
+			log.Println(err)
+		}
+
+	}
+	return transport
+}
