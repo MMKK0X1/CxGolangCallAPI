@@ -1,5 +1,6 @@
 
-# Project: Secure Static code analysis (Checkmarx) scanning api invocation
+# Project: 
+#Secure Static code analysis (Checkmarx) scanning api invocation
 During my engagement I have been looking for solution to run secure static code analysis integrated as part of development processes. While there are a few plugins such as "Checkmarx CxSAST Plugin" this requires Jenkins, which is not the case. 
 
 Building another plugin for addition automation tool only provides partial solution and lacks versatility. 
