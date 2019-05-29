@@ -23,14 +23,14 @@ Golang compiler and package manager
 
 Download and Compile the project:
 
-'''
+
 download the project
-'''
+
 
 For example Windows compilation command 
-  '''
+```
   % GOOS=windows GOARCH=amd64 go build -o scan.exe
-'''
+```
 
 The following paramets are accepted:
 
