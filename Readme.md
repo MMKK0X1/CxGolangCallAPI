@@ -57,7 +57,7 @@ The following paramets are accepted:
 
 Command example:
 
-'''
+```
 scan.exe -cxserver="https://checkmarxserveraddress.net" -proxy="localhost:8090" -action="SastScan" -user="user" -pass="password" filelocation="D:\tmp\main.zip" projectID="24" -cxpreset="1"
-'''
+```
 
