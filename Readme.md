@@ -7,6 +7,7 @@ Besides, most of the machines are short lived, docker builders, so the solution 
 
 :boom: 
 Therefore, after taking into an account the above, I went home and end-up to build a client. 
+
 The client is build on golang and can be compiled cross-platform. - :+1:    				
 
 Once built is very fast and have small footprint - :+1:
