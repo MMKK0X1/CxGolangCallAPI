@@ -1,6 +1,6 @@
 
 # Project: 
-#Secure Static code analysis (Checkmarx) scanning api invocation
+# Secure Static code analysis (Checkmarx) scanning api invocation
 During my engagement I have been looking for solution to run secure static code analysis integrated as part of development processes. While there are a few plugins such as "Checkmarx CxSAST Plugin" this requires Jenkins, which is not the case. 
 
 Building another plugin for addition automation tool only provides partial solution and lacks versatility. 
@@ -9,8 +9,8 @@ Next I have looked at  CxConsole (CxSAST CLI). This tool requires JVM to be inst
 
 Besides, most of the machines are short lived, docker builders, so the solution should be portable and as small as possible, especially when docker scratch was used as base. 
 
-:boom: 
-Therefore, after taking into an account the above, I went home and end-up to build a client. 
+
+Therefore, after taking into an account the above, I went home and end-up to build a client. :boom: 
 
 **Cross-platform**  
 The client is build on golang and can be compiled . - :+1:    				
