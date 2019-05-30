@@ -1,7 +1,6 @@
 package methods
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"mtypes"
@@ -13,7 +12,7 @@ import (
 )
 
 //ScanSettings
-func SastScan(sc mtypes.ConnectStruct, bodyortoken string) (rpx string) {
+func SastScan(sc mtypes.ConnectStruct, bodyortoken string) (rpx []byte, respcode int) {
 
 	//Create Transport based on proxy configuration
 	transport := cr.CreateTransport(sc.Proxyserver)
@@ -50,8 +49,8 @@ func SastScan(sc mtypes.ConnectStruct, bodyortoken string) (rpx string) {
 	// defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
 
-	fmt.Println(res.StatusCode)
-	fmt.Println(string(body))
-	rpx = string(body)
-	return rpx
+	// fmt.Println(res.StatusCode)
+	// fmt.Println(string(body))
+
+	return body, (res.StatusCode)
 }

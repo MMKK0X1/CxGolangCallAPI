@@ -1,8 +1,6 @@
 package methods
 
 import (
-	"fmt"
-	"io/ioutil"
 	"log"
 	"mtypes"
 	"strings"
@@ -52,10 +50,10 @@ func ScanSettings(sc mtypes.ConnectStruct, au mtypes.Authparams, presetid, bodyo
 	}
 
 	// defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
+	// body, _ := ioutil.ReadAll(res.Body)
 
-	fmt.Println(res.StatusCode)
-	fmt.Println(string(body))
+	// fmt.Println(res.StatusCode)
+	// fmt.Println(string(body))
 	rp = res
 	return rp
 }

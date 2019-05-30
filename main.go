@@ -19,22 +19,8 @@ import (
 
 func main() {
 
-	fmt.Println("Start :")
-	// st := new(Heelo)
-	// fmt.Println(st)
+	fmt.Println("\n")
 
-	// proxyserver := "http://localhost:8090"
-	// destinationserver := "https://latitudefinancials.checkmarx.net"
-	// getTokenURI := "cxrestapi/auth/identity/connect/token"
-	// submitTokenUri := "/cxrestapi/projects"
-
-	// username := "testuser"
-	// password := "Password1!"
-	// token2 := "hello toke"
-	// proxyserver = ""
-
-	// fmt.Println("hwerwe is is :",de.A)
-	// Getcxlinks("asdf")
 	destinationserver := flag.String("cxserver", "127.0.0.1", "Checkmarx server destination URL (\"no URI\")")
 	fullProxyURL := flag.String("proxy", "", "ProxyServer without Authentication destination URL (\"no URI\")")
 	user := flag.String("user", "defaultUser", "Username  for Authentication against Checkmarx server  (\"no URI\")")
@@ -92,9 +78,9 @@ func main() {
 		fmt.Println(*oauthtoken)
 
 	case strings.ToLower("SastScan"):
-		fmt.Println("Chosen action: ", *action)
+		fmt.Println("Starting action: ", *action)
 		fmt.Println("Start command execution of :", *action)
-		fmt.Println(responseConnectStruct.Action.GetAction(*action))
+		responseConnectStruct.Action.GetAction(*action)
 		//define scan settings
 		rp := st.ScanSettings(responseConnectStruct, responseAuthparams, *cxpreset, *oauthtoken)
 		if rp.StatusCode != 200 {
@@ -106,12 +92,20 @@ func main() {
 
 			fmt.Println(err)
 		} else {
-			fmt.Printf("Settings set successfully, projectid %s:", (*projectID))
+			fmt.Printf("Settings set successfully for ProjectID: %s\n", (*projectID))
 		}
 
-		fmt.Print((st.SastScan(responseConnectStruct, *oauthtoken)))
+		if resbody, ercode := st.SastScan(responseConnectStruct, *oauthtoken); ercode != 201 {
+			fmt.Printf("Couldn't start the scan, error =%s", err)
+		} else {
+			var j *mtypes.CxJresponseScan
+			// fmt.Println("jfres=", j.ParcecxResponseNonByte(resbody).Link.Uri)
 
-		fmt.Println("Scan started")
+			fmt.Printf("Scan started for projectID: %s\n", *projectID)
+			fmt.Printf("Check for results: %s/cxrestapi%s\n", *destinationserver, j.ParcecxResponseNonByte(resbody).Link.Uri)
+		}
+
+		// fmt.Print((st.SastScan(responseConnectStruct, *oauthtoken)))
 
 		data, statusCode, err = methods.Buildandsend(responseConnectStruct, responseAuthparams, mtypes.StringBuilder(responseConnectStruct, responseAuthparams))
 		if err != nil {
@@ -132,7 +126,7 @@ func main() {
 		}
 
 	case strings.ToLower("getprojects"):
-		fmt.Println("Chosen action: ", *action)
+		fmt.Println("Starting action: ", *action)
 		fmt.Println("Start command execution of :", *action)
 		responseConnectStruct, responseAuthparams = mtypes.SetConnectDetails(*destinationserver, *fullProxyURL, *user, *pass, *oauthtoken, temp.GetAction(*action), *filelocation, *projectID)
 		data, statusCode, err = methods.Buildandsend(responseConnectStruct, responseAuthparams, mtypes.StringBuilder(responseConnectStruct, responseAuthparams))
@@ -206,6 +200,7 @@ func main() {
 		return
 
 	}
+	fmt.Println("\n")
 
 	// fmt.Println("tail:", flag.Args())
 }

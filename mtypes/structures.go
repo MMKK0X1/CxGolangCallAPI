@@ -94,6 +94,14 @@ func (cxj *CxJresponseScan) ParcecxResponse(data []byte) []CxJresponseScan {
 	}
 	return arr
 }
+func (cxj *CxJresponseScan) ParcecxResponseNonByte(data []byte) *CxJresponseScan {
+
+	err := json.Unmarshal([]byte(data), &cxj)
+	if err != nil {
+		log.Println(err)
+	}
+	return cxj
+}
 
 func SetConnectDetails(ds string, ps string, us string, pass string, oa string, ac cxurls.Cxmetadata, filel string, prjid string) (ConnectStruct, Authparams) {
 

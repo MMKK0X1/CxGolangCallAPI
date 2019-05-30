@@ -22,7 +22,6 @@ func UploadFile(path, proxyserver, id, oauthtoken string) (*http.Response, error
 	defer file.Close()
 
 	readbody := &bytes.Buffer{}
-	fmt.Println("Value:", *readbody)
 
 	writer := multipart.NewWriter(readbody)
 	// part, err := writer.CreateFormFile("ID", id)
@@ -67,7 +66,7 @@ func UploadFile(path, proxyserver, id, oauthtoken string) (*http.Response, error
 	}
 	if resp.StatusCode != 204 {
 		fmt.Println(resp.Header)
-		fmt.Println("File wasn't uploaded")
+		fmt.Println("Error in file upload")
 	} else {
 
 		return resp, err
