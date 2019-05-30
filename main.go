@@ -36,7 +36,7 @@ func main() {
 	// fmt.Println("hwerwe is is :",de.A)
 	// Getcxlinks("asdf")
 	destinationserver := flag.String("cxserver", "127.0.0.1", "Checkmarx server destination URL (\"no URI\")")
-	fullProxyURL := flag.String("proxy", "0.0.0.0", "ProxyServer without Authentication destination URL (\"no URI\")")
+	fullProxyURL := flag.String("proxy", "", "ProxyServer without Authentication destination URL (\"no URI\")")
 	user := flag.String("user", "defaultUser", "Username  for Authentication against Checkmarx server  (\"no URI\")")
 	pass := flag.String("pass", "defaultPassword", "Password for Authentication against Checkmarx server  (\"no URI\")")
 	oauthtoken := flag.String("oauthtoken", "", "oauth2 token to be used in requests")
@@ -63,18 +63,6 @@ func main() {
 	fmt.Println("filelocation:", *filelocation)
 	fmt.Println("projectID:", *projectID)
 	fmt.Println("cxpreset:", *cxpreset)
-
-	*fullProxyURL = "http://localhost:8090"
-
-	*user = "testuser"
-	*pass = "Passwrod1!"
-
-	*oauthtoken = "oauthtoken"
-	*action = "UploadFile"
-	*action = "SastScan"
-
-	*projectID = "24"
-	*filelocation = "d:/tmp/main.zip"
 
 	//First step to get Oauth2 Token for following commands
 	temp := cxurls.Cxmetadata{Action: "getToken"}
@@ -158,7 +146,7 @@ func main() {
 			var cxj *mtypes.CxJresponseScan
 			tmp := cxj.ParsecxResponse(data)
 			for i := range tmp {
-				fmt.Println("Available app: ", cxj.ParsecxResponse(data)[i].Name)
+				fmt.Printf("Application: %v, ProjectID: %v \n", cxj.ParsecxResponse(data)[i].Name, cxj.ParsecxResponse(data)[i].ID)
 			}
 			*action = "GetPreset"
 			responseConnectStruct, responseAuthparams = mtypes.SetConnectDetails(*destinationserver, *fullProxyURL, *user, *pass, *oauthtoken, temp.GetAction(*action), *filelocation, *projectID)

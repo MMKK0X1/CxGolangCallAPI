@@ -39,7 +39,6 @@ func Buildandsend(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken str
 		if err != nil {
 			log.Println(err)
 		}
-		fmt.Println("Method Sent", sc.Action.Method)
 
 	} else if strings.ToUpper(sc.Action.Method) == "GET" {
 
@@ -50,7 +49,6 @@ func Buildandsend(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken str
 		if err != nil {
 			log.Println(err)
 		}
-		fmt.Println("Method Sent", sc.Action.Method)
 
 	} else {
 		fmt.Println("No Method defined", sc.Action.Method)
