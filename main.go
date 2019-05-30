@@ -26,29 +26,12 @@ func main() {
 	user := flag.String("user", "defaultUser", "Username  for Authentication against Checkmarx server  (\"no URI\")")
 	pass := flag.String("pass", "defaultPassword", "Password for Authentication against Checkmarx server  (\"no URI\")")
 	oauthtoken := flag.String("oauthtoken", "", "oauth2 token to be used in requests")
-	// action := flag.String("action", "defaultAction", "Type of action perfomed on Checkmarx server (start scan/ get results)  (\"no URI\")")
-	//action Start Scan= scan
 	action := flag.String("action", "getprojects", "Type of action to perform:\ngetprojects (list of projects)\\SastScan (scan project)\n get (get scan results)\nGettoken (!!! Sensitive Present Oauth2 Token !!!) ")
-
 	filelocation := flag.String("filelocation", "defaultfilelocation", "Full Path to Local system ZIP file location  (\"no URI\")")
 	projectID := flag.String("projectID", "defaultprojectID", "projectID on Checkmarx server under which scan will be executed  (\"no URI\")")
 	cxpreset := flag.String("cxpreset", "1", "projectID on Checkmarx server under which scan will be executed  (\"no URI\")")
 
-	_ = cxpreset
 	flag.Parse()
-	//	var svar string
-	//	flag.StringVar(&svar, "svar", "bar", "a string var")
-
-	// *destinationserver = "https://destination.checkmarx.net"
-	// fmt.Println("*destinationserver ", *destinationserver)
-	// fmt.Println("fullProxyURL:", *fullProxyURL)
-	// fmt.Println("user:", *user)
-	// fmt.Println("pass:", *pass)
-	// fmt.Println("oauthtoken:", *oauthtoken)
-	// fmt.Println("action:", *action)
-	// fmt.Println("filelocation:", *filelocation)
-	// fmt.Println("projectID:", *projectID)
-	// fmt.Println("cxpreset:", *cxpreset)
 
 	//First step to get Oauth2 Token for following commands
 	temp := cxurls.Cxmetadata{Action: "getToken"}
@@ -69,7 +52,6 @@ func main() {
 	//run bodyparcer to extract Authenticaiton token
 	var j *mtypes.Jresponse
 	*oauthtoken = j.GetTokenfromBody(data).Access_token
-	// *oauthtoken = j.GetTokenfromBody(data)
 
 	// Use the token for exection of commands agains Checkmarx server
 
@@ -99,13 +81,10 @@ func main() {
 			fmt.Printf("Couldn't start the scan, error =%s", err)
 		} else {
 			var j *mtypes.CxJresponseScan
-			// fmt.Println("jfres=", j.ParcecxResponseNonByte(resbody).Link.Uri)
 
 			fmt.Printf("Scan started for projectID: %s\n", *projectID)
 			fmt.Printf("Check for results: %s/cxrestapi%s\n", *destinationserver, j.ParcecxResponseNonByte(resbody).Link.Uri)
 		}
-
-		// fmt.Print((st.SastScan(responseConnectStruct, *oauthtoken)))
 
 		data, statusCode, err = methods.Buildandsend(responseConnectStruct, responseAuthparams, mtypes.StringBuilder(responseConnectStruct, responseAuthparams))
 		if err != nil {
@@ -115,13 +94,6 @@ func main() {
 		if statusCode != 200 {
 			panic("Can't authenticate to Checkmarx servers, check url and credentials")
 		} else {
-
-			// Outbody
-			// fmt.Println("Execution output: \n", string(data))
-
-			// 	Future Placeholder for project id parcer
-			// 	var cxj *mtypes.CxJresponse
-			// tmp := cxj.Parcecxresponse(data)
 
 		}
 
@@ -159,42 +131,6 @@ func main() {
 		}
 
 	case strings.ToLower("UploadFile"):
-		// *projectID = "24"
-		// *filelocation = "d:/tmp/main.zip"
-
-		// urlForUpload := "https://latitudefinancials.checkmarx.net/cxrestapi/projects/" + *projectID + "/sourceCode/attachments"
-
-		// request, err := up.UploadFile(urlForUpload, *filelocation, *fullProxyURL, *projectID)
-		// request.Header.Add("Authorization", "Bearer "+*oauthtoken)
-
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-		// //Create Transport based on proxy configuration
-		// transport := cr.CreateTransport(*fullProxyURL)
-		// client := &http.Client{
-		// 	Transport: transport,
-		// }
-		// resp, err := client.Do(request)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// } else {
-		// 	readbody := &bytes.Buffer{}
-		// 	_, err := readbody.ReadFrom(resp.Body)
-		// 	if err != nil {
-		// 		log.Fatal(err)
-		// 	}
-		// 	resp.Body.Close()
-		// }
-		// if resp.StatusCode != 204 {
-		// 	fmt.Println(resp.Header)
-		// 	fmt.Println("File wasn't uploaded")
-		// } else {
-		// 	fmt.Println("Triggering scan")
-		// 	*action = "SastScan"
-		// 	responseConnectStruct, responseAuthparams = mtypes.SetConnectDetails(*destinationserver, *fullProxyURL, *user, *pass, *oauthtoken, temp.GetAction(*action), *filelocation, *projectID)
-		// 	data, statusCode, err = methods.Buildandsend(responseConnectStruct, responseAuthparams, mtypes.StringBuilder(responseConnectStruct, responseAuthparams))
-		// }
 
 	default:
 		return
@@ -202,5 +138,4 @@ func main() {
 	}
 	fmt.Println("\n")
 
-	// fmt.Println("tail:", flag.Args())
 }

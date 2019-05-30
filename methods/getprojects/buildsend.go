@@ -30,9 +30,7 @@ func Buildandsend(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken str
 	}
 
 	//generating the HTTP POST request
-
 	var request *http.Request
-
 	if strings.ToUpper(sc.Action.Method) == "POST" {
 		//POST must have body
 		request, err = http.NewRequest(sc.Action.Method, url.String(), strings.NewReader(bodyortoken))
@@ -54,9 +52,6 @@ func Buildandsend(sc mtypes.ConnectStruct, au mtypes.Authparams, bodyortoken str
 		fmt.Println("No Method defined", sc.Action.Method)
 
 	}
-
-	//calling the URL
-	//getting the response
 	response, err := client.Do(request)
 	if err != nil {
 		log.Println(err)

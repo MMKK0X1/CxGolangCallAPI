@@ -13,7 +13,6 @@ type Connection struct {
 	ConnectStruct ConnectStruct
 	Authparams    Authparams
 }
-
 type Jresponse struct {
 	Access_token string `json:"access_token"` // Uppercased first letter
 	Expires_in   int    `json:"expires_in"`   // Uppercased first letter
@@ -74,7 +73,6 @@ func StringBuilder(cs ConnectStruct, au Authparams) string {
 	}
 	return "Error"
 
-	// return ("username=" + url.QueryEscape(authdata.Username) + "&" + "password=" + url.QueryEscape(authdata.Password) + "&" + "grant_type=" + authdata.Grant_type + "&" + "scope=" + authdata.Scope + "&" + "client_id=" + authdata.Client_id + "&" + "client_secret=" + authdata.Client_secret)
 }
 
 func (j *Jresponse) GetTokenfromBody(data []byte) *Jresponse {
