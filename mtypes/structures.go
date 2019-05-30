@@ -58,7 +58,6 @@ type ConnectStruct struct {
 	// Url               cxurls.Cxmetadata
 }
 
-
 func (c *ConnectStruct) Addprojectid(id string) *ConnectStruct {
 	c.ProjectID = id
 	fmt.Println("this is ConnectStruct struct", c)
@@ -87,7 +86,7 @@ func (j *Jresponse) GetTokenfromBody(data []byte) *Jresponse {
 
 }
 
-func (cxj *CxJresponseScan) ParsecxResponse(data []byte) []CxJresponseScan {
+func (cxj *CxJresponseScan) ParcecxResponse(data []byte) []CxJresponseScan {
 	var arr []CxJresponseScan
 	err := json.Unmarshal([]byte(data), &arr)
 	if err != nil {

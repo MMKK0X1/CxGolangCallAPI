@@ -54,15 +54,15 @@ func main() {
 	//	flag.StringVar(&svar, "svar", "bar", "a string var")
 
 	// *destinationserver = "https://destination.checkmarx.net"
-	fmt.Println("*destinationserver ", *destinationserver)
-	fmt.Println("fullProxyURL:", *fullProxyURL)
-	fmt.Println("user:", *user)
-	fmt.Println("pass:", *pass)
-	fmt.Println("oauthtoken:", *oauthtoken)
-	fmt.Println("action:", *action)
-	fmt.Println("filelocation:", *filelocation)
-	fmt.Println("projectID:", *projectID)
-	fmt.Println("cxpreset:", *cxpreset)
+	// fmt.Println("*destinationserver ", *destinationserver)
+	// fmt.Println("fullProxyURL:", *fullProxyURL)
+	// fmt.Println("user:", *user)
+	// fmt.Println("pass:", *pass)
+	// fmt.Println("oauthtoken:", *oauthtoken)
+	// fmt.Println("action:", *action)
+	// fmt.Println("filelocation:", *filelocation)
+	// fmt.Println("projectID:", *projectID)
+	// fmt.Println("cxpreset:", *cxpreset)
 
 	//First step to get Oauth2 Token for following commands
 	temp := cxurls.Cxmetadata{Action: "getToken"}
@@ -105,8 +105,10 @@ func main() {
 		if r2.StatusCode != 204 {
 
 			fmt.Println(err)
+		} else {
+			fmt.Printf("Settings set successfully, projectid %s:", (*projectID))
 		}
-		fmt.Printf("Settings were set: Return status good is 204=: %s, triggering scan of Project: %s", r2.Status, *projectID)
+
 		fmt.Print((st.SastScan(responseConnectStruct, *oauthtoken)))
 
 		fmt.Println("Scan started")
@@ -125,7 +127,7 @@ func main() {
 
 			// 	Future Placeholder for project id parcer
 			// 	var cxj *mtypes.CxJresponse
-			// tmp := cxj.Parsecxresponse(data)
+			// tmp := cxj.Parcecxresponse(data)
 
 		}
 
@@ -144,9 +146,9 @@ func main() {
 			//Project id parcer
 			fmt.Print("List of availabe applications:\n")
 			var cxj *mtypes.CxJresponseScan
-			tmp := cxj.ParsecxResponse(data)
+			tmp := cxj.ParcecxResponse(data)
 			for i := range tmp {
-				fmt.Printf("Application: %v, ProjectID: %v \n", cxj.ParsecxResponse(data)[i].Name, cxj.ParsecxResponse(data)[i].ID)
+				fmt.Printf("Application: %v, ProjectID: %v \n", cxj.ParcecxResponse(data)[i].Name, cxj.ParcecxResponse(data)[i].ID)
 			}
 			*action = "GetPreset"
 			responseConnectStruct, responseAuthparams = mtypes.SetConnectDetails(*destinationserver, *fullProxyURL, *user, *pass, *oauthtoken, temp.GetAction(*action), *filelocation, *projectID)
@@ -155,9 +157,9 @@ func main() {
 				log.Println(err)
 			}
 			fmt.Print("Awailable presets: ")
-			tmp2 := cxj.ParsecxResponse(data)
+			tmp2 := cxj.ParcecxResponse(data)
 			for i := range tmp2 {
-				fmt.Printf(" %s:%d\n", cxj.ParsecxResponse(data)[i].Name, cxj.ParsecxResponse(data)[i].ID)
+				fmt.Printf(" %s:%d\n", cxj.ParcecxResponse(data)[i].Name, cxj.ParcecxResponse(data)[i].ID)
 			}
 
 		}
