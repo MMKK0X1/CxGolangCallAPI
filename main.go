@@ -66,15 +66,15 @@ func main() {
 
 	*fullProxyURL = "http://localhost:8090"
 
-	// *user = "testuser"
-	// *pass = "passsword"
+	*user = "testuser"
+	*pass = "Passwrod1!"
 
-	// *oauthtoken = "oauthtoken"
-	// *action = "UploadFile"
-	// *action = "SastScan"
+	*oauthtoken = "oauthtoken"
+	*action = "UploadFile"
+	*action = "SastScan"
 
-	// *projectID = "24"
-	// *filelocation = "d:/tmp/main.zip"
+	*projectID = "24"
+	*filelocation = "d:/tmp/main.zip"
 
 	//First step to get Oauth2 Token for following commands
 	temp := cxurls.Cxmetadata{Action: "getToken"}

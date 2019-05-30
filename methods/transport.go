@@ -2,6 +2,7 @@ package createtransport
 
 import (
 	"crypto/tls"
+	"fmt"
 	"log"
 	"net/http"
 	"net/url"
@@ -10,6 +11,7 @@ import (
 func CreateTransport(proxyserver string) *http.Transport {
 	transport := &http.Transport{}
 	if proxyserver == "" {
+		fmt.Println("This is proxyvalue", proxyserver)
 		transport = &http.Transport{
 			//!!!disable certificate CHECK!!!!
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
